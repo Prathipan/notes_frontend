@@ -84,6 +84,9 @@ export default function SignInSide() {
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
+            <div style={{color : "red"}}>
+              <p>email : prathipan24p@gmail.com || password : 12345678</p>
+            </div>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
