@@ -17,19 +17,19 @@ import * as yup from "yup";
 import { login } from "../context/userContext/apiCalls";
 import { AuthContext } from "../context/userContext/AuthContext";
 import { useContext, useState } from "react";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
+  const [show, setShow] = useState(false);
 
-  const [show,setShow] = useState(false)
-
-  const {dispatch} = useContext(AuthContext);
+  const { dispatch, isLoading } = useContext(AuthContext);
 
   const handleClick = () => {
-    setShow(show => !show)
-    console.log(show)
-  }
+    setShow((show) => !show);
+    console.log(show);
+  };
 
   const loginValidation = yup.object({
     email: yup.string().required("email is required").min(5),
@@ -42,9 +42,9 @@ export default function SignInSide() {
       password: "",
     },
     validationSchema: loginValidation,
-    onSubmit: (userInput,{resetForm}) => {
+    onSubmit: (userInput, { resetForm }) => {
       // console.log(userInput);
-      login(userInput,dispatch);
+      login(userInput, dispatch);
       resetForm();
     },
   });
@@ -84,13 +84,13 @@ export default function SignInSide() {
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <div style={{color : "red"}}>
+            <div style={{ color: "red" }}>
               <p>email : prathipan24p@gmail.com || password : 12345678</p>
             </div>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box sx={{ mt: 1 }}>
+            <Box sx={{ mt: 1}}>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -135,18 +135,32 @@ export default function SignInSide() {
                     />
                   </Grid>
                   <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" checked={show} onClick={handleClick} />}
+                    control={
+                      <Checkbox
+                        value="remember"
+                        color="primary"
+                        checked={show}
+                        onClick={handleClick}
+                      />
+                    }
                     label="Show password"
                   />
+                  {isLoading ? (
+                  <Box sx={{ display: "flex" }}>
+                    <CircularProgress />
+                  </Box>
+                ) : (
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Sign In
+                  </Button>
+                )}
                 </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Sign In
-                </Button>
+                
                 <Grid container>
                   <Grid item>
                     <Link to="/signup" variant="body2">
