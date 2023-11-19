@@ -1,0 +1,1 @@
+export const api = "https://notes-backend-4irj.onrender.com"
